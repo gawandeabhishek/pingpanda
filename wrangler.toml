@@ -1,5 +1,6 @@
 name = "pingpanda"
 compatibility_date = "2024-03-29"
+compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 
 [vars]
@@ -12,3 +13,4 @@ ENV_MODE = "production"
 [env.preview]
 [env.preview.vars]
 ENV_MODE = "preview"
+
