@@ -14,14 +14,10 @@ export async function POST(req: Request) {
       process.env.STRIPE_WEBHOOK_SECRET ?? ""
     )
 
-    console.log("Stripe event received:\n", event)
-
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session
 
       const userId = session.metadata?.userId
-
-      console.log("User ID from metadata:\n", userId)
 
       if (!userId) {
         return new Response("Missing userId in metadata", { status: 400 })
