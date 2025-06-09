@@ -4,29 +4,38 @@ import { headers } from "next/headers"
 import Stripe from "stripe"
 
 export async function POST(req: Request) {
-  const body = await req.text()
-  const signature = headers().get("stripe-signature")
+  try {
+    const body = await req.text()
+    const signature = headers().get("stripe-signature")
 
-  const event = stripe.webhooks.constructEvent(
-    body,
-    signature ?? "",
-    process.env.STRIPE_WEBHOOK_SECRET ?? ""
-  )
+    const event = stripe.webhooks.constructEvent(
+      body,
+      signature ?? "",
+      process.env.STRIPE_WEBHOOK_SECRET ?? ""
+    )
 
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session
+    console.log("Stripe event received:\n", event)
 
-    const { userId } = session.metadata || { userId: null }
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object as Stripe.Checkout.Session
 
-    if (!userId) {
-      return new Response("Invalid metadata", { status: 400 })
+      const userId = session.metadata?.userId
+
+      console.log("User ID from metadata:\n", userId)
+
+      if (!userId) {
+        return new Response("Missing userId in metadata", { status: 400 })
+      }
+
+      await db.user.update({
+        where: { id: userId },
+        data: { plan: "PRO" },
+      })
     }
 
-    await db.user.update({
-      where: { id: userId },
-      data: { plan: "PRO" },
-    })
+    return new Response("OK")
+  } catch (err: any) {
+    console.error("Stripe webhook error:", err.message)
+    return new Response(`Webhook Error: ${err.message}`, { status: 400 })
   }
-
-  return new Response("OK")
 }

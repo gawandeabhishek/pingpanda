@@ -12,11 +12,7 @@ upload_dir = ".vercel/output/static"
 NEXT_PUBLIC_SITE_URL = "https://pingpanda-252.pages.dev"
 
 [env.production]
-vars = { 
-  ENV_MODE = "production"
-}
+ENV_MODE = "production"
 
 [env.staging]
-vars = {
-  ENV_MODE = "staging"
-}
+ENV_MODE = "staging"
