@@ -7,7 +7,8 @@ import { UserButton } from "@clerk/nextjs"
 import { Gem, Home, Key, LucideIcon, Menu, Settings, X } from "lucide-react"
 import Link from "next/link"
 import { PropsWithChildren, useState } from "react"
-import { Drawer } from "vaul"
+
+export const runtime = "edge"
 
 interface SidebarItem {
   href: string

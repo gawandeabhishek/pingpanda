@@ -7,6 +7,8 @@ import { cn } from "@/utils"
 import "./globals.css"
 import { ClerkProvider } from "@clerk/nextjs"
 
+export const runtime = "edge"
+
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const eb_garamond = EB_Garamond({
   subsets: ["latin"],
