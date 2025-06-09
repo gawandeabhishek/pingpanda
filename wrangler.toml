@@ -7,10 +7,11 @@ pages_build_output_dir = ".vercel/output/static"
 NEXT_PUBLIC_APP_URL = "https://pingpanda-252.pages.dev"
 
 [env.production]
-[env.production.vars]
+vars = { 
 ENV_MODE = "production"
+}
 
-[env.preview]
-[env.preview.vars]
-ENV_MODE = "preview"
-
+[env.staging]
+vars = {
+  ENV_MODE = "staging"
+}
