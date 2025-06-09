@@ -1,8 +1,12 @@
 name = "pingpanda"
+main = "src/server/index.ts"
 compatibility_date = "2024-03-29"
-
-# ✅ This is the correct output directory for Pages projects (Vercel static output)
+compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
+
+[build]
+command = "npm run build"
+upload_dir = ".vercel/output/static"
 
 [vars]
 NEXT_PUBLIC_SITE_URL = "https://pingpanda-252.pages.dev"
@@ -10,5 +14,5 @@ NEXT_PUBLIC_SITE_URL = "https://pingpanda-252.pages.dev"
 [env.production]
 ENV_MODE = "production"
 
-[env.preview]
-ENV_MODE = "preview"  # Optional override if needed
+[env.staging]
+ENV_MODE = "staging"
